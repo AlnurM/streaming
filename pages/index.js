@@ -1,15 +1,13 @@
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import * as routes from 'lib/routes'
-const Home = () => {
-  return <></>
-}
 
-export const getStaticProps = async context => {
-  return {
-    redirect: {
-      destination: routes.CREATE_ROUTE,
-      permanent: false,
-    },
-  }
+const Home = () => {
+  const router = useRouter()
+  useEffect(() => {
+    router.push(routes.CREATE_ROUTE)
+  }, [])
+  return <></>
 }
 
 export default Home
