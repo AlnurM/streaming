@@ -47,15 +47,22 @@ const RetranslationDialog = dynamic(
 const Create = ({ accessToken }) => {
   const router = useRouter()
   const { form, restreamForm, inviteForm } = LobbyStore
-  const { validConfig } = useValidateForm({ ...form }, ['name', 'description', 'resolution', 'fps'])
-  const { validConfig: restreamValidConfig } = useValidateForm({ ...restreamForm })
+  const { validConfig, isValid } = useValidateForm({ ...form }, [
+    'name',
+    'description',
+    'resolution',
+    'fps',
+  ])
+  const { validConfig: restreamValidConfig, isValid: isRestreamValid } = useValidateForm({
+    ...restreamForm,
+  })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [valid, setValid] = useState({})
   const [restreamValid, setRestreamValid] = useState({})
 
   const handleRestream = ({ event, callback }) => {
     event.preventDefault()
-    if (Object.values(restreamValidConfig).some(f => !f)) {
+    if (isRestreamValid) {
       setRestreamValid(restreamValidConfig)
       return
     }
@@ -64,7 +71,7 @@ const Create = ({ accessToken }) => {
   }
 
   const handleSave = () => {
-    if (Object.values(validConfig).some(f => !f)) {
+    if (isValid) {
       setValid(validConfig)
       return
     }

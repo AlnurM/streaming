@@ -15,12 +15,12 @@ import { Button } from 'components/button'
 const SignIn = () => {
   const router = useRouter()
   const { form } = AuthStore
-  const { validConfig } = useValidateForm({ ...form }, ['email', 'password'])
+  const { validConfig, isValid } = useValidateForm({ ...form }, ['email', 'password'])
   const [valid, setValid] = useState({})
 
   const handleSubmit = event => {
     event.preventDefault()
-    if (Object.values(validConfig).some(f => !f)) {
+    if (isValid) {
       setValid(validConfig)
       return
     }

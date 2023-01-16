@@ -32,7 +32,7 @@ const config = {
           </div>
           <div className={styles.RetranslationDialogContent}>
             {list.map(item => (
-              <div className={styles.RetranslationDialogContentItem}>
+              <div key={item.name} className={styles.RetranslationDialogContentItem}>
                 <Icon width={32} height={32} src={`/assets/ic-${item.name}.svg`} />
                 <span className={styles.RetranslationDialogContentText}>
                   {item.name.toCapitalCase()}

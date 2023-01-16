@@ -5,7 +5,8 @@ const useValidateForm = (form, config = Object.keys(form)) => {
     () => config.reduce((obj, key) => ({ ...obj, [key]: !!form[key] }), {}),
     [form]
   )
-  return { validConfig }
+  const isValid = useMemo(() => Object.values(validConfig).some(f => !f), [validConfig])
+  return { validConfig, isValid }
 }
 
 export default useValidateForm
