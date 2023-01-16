@@ -1,0 +1,5 @@
+export { default as FRAME_1 } from './Frame1'
+export { default as FRAME_2 } from './Frame2'
+export { default as FRAME_3 } from './Frame3'
+export { default as FRAME_4 } from './Frame4'
+export { default as FRAME_5 } from './Frame5'

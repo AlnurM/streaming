@@ -6,14 +6,46 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier": "prettier --write '**/*.{js,jsx,css,html}'"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100,
+    "endOfLine": "lf",
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false,
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "avoid"
   },
   "dependencies": {
-    "@next/font": "13.1.1",
+    "@next/font": "13.0.7",
+    "axios": "^1.2.1",
+    "clsx": "^1.2.1",
     "eslint": "8.30.0",
-    "eslint-config-next": "13.1.1",
-    "next": "13.1.1",
+    "eslint-config-next": "13.0.7",
+    "mobx": "^6.7.0",
+    "mobx-react-lite": "^3.4.0",
+    "next": "13.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-next": "12.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "prettier": "^2.6.1",
+    "sass": "^1.49.9",
+    "webpack-dev-middleware": "^5.3.1",
+    "webpack-hot-middleware": "^2.25.1"
   }
 }

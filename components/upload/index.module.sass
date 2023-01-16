@@ -1,0 +1,61 @@
+@import "/styles/colors"
+
+.FileUploader
+  display: flex
+  flex-direction: column
+
+  &Label
+    margin-bottom: 4px
+    color: $gray-700-color
+    font-weight: 500
+    font-size: 14px
+    line-height: 20px
+
+  &Content
+    display: flex
+
+  &Item
+    margin-left: 10px
+    width: 276px
+    height: 140px
+    border-radius: 6px
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: center center
+
+  &Form
+    width: 276px
+    height: 140px
+    border: 2px dashed $gray-300-color
+    border-radius: 6px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+    &Title
+      color: $gray-600-color
+      font-weight: 500
+      font-size: 14px
+      line-height: 20px
+
+    &Link
+      @extend .FileUploaderFormTitle
+      margin-right: 4px
+      color: $primary-color
+      cursor: pointer
+
+      &:hover
+        text-decoration: underline
+
+    &Text
+      color: $gray-500-color
+      font-weight: 400
+      font-size: 12px
+      line-height: 16px
+
+.Icon
+  &FileUpload
+    width: 48px
+    height: 48px
+    background: url("/assets/image.svg") no-repeat center center /cover

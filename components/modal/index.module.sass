@@ -1,0 +1,124 @@
+@import "/styles/colors"
+
+.Dialog
+  overflow: hidden
+  position: fixed
+  inset: 0
+  z-index: 999
+  margin: auto
+  padding: 16px 24px
+  width: fit-content
+  height: fit-content
+  border-radius: 8px
+  transition: all 0.3s ease-in-out
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  &Default
+    background: $white-color
+
+  &Primary
+    background: $secondary-color
+
+  &Backdrop
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: transparent
+
+  &Header
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+    &Title
+      color: $gray-900-color
+      font-weight: 600
+      font-size: 20px
+      line-height: 24px
+
+  &Content
+    width: 100%
+    height: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+
+.RetranslationDialog
+  width: 100%
+
+  &Header
+    margin-top: 24px
+    width: 100%
+    border-bottom: 2px solid $secondary-color
+
+    &Text
+      font-weight: 600
+      font-size: 12px
+      line-height: 20px
+
+  &Content
+    border-bottom: 2px solid $secondary-color
+
+    &Item
+      margin: 12px 0
+      display: flex
+      align-items: center
+
+    &Text
+      margin-left: 16px
+      font-weight: 400
+      font-size: 14px
+      line-height: 20px
+
+    &Link
+      margin-left: auto
+      color: $primary-color
+      font-weight: 400
+      font-size: 14px
+      line-height: 20px
+
+      &:hover
+        text-decoration: underline
+        cursor: pointer
+
+  &Group
+    display: flex
+
+  &Platform
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+
+    &Item
+      margin-top: 16px
+      padding: 17px
+      width: calc(33.3333% - 10px)
+      background: #FFFFFF
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18)
+      border-radius: 4px
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      cursor: pointer
+
+    &Img
+      width: 52px
+      height: 52px
+      background-size: cover
+      background-repeat: no-repeat
+      background-position: center center
+
+    &Text
+      margin-top: 12px
+      font-weight: 400
+      font-size: 14px
+      line-height: 20px
+
+  &Streaming
+    width: 100%

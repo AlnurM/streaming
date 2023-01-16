@@ -1,0 +1,136 @@
+@import "/styles/colors"
+
+.MainPlayer
+  height: 75%
+  border-radius: 8px
+  background-color: $white-color
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center center
+
+  &Video
+    width: 100%
+    height: 100%
+    pointer-events: none
+    object-fit: cover
+  
+.FRAME
+  position: relative
+  width: 100%
+  height: 100%
+  display: flex
+
+  &Focused
+    position: relative
+
+    &::after
+      content: ""
+      position: absolute
+      z-index: 999
+      top: -6px
+      left: -6px
+      width: 100%
+      height: 100%
+      border-radius: 8px
+      background: transparent
+      border: 6px solid $primary-color
+
+.FRAME_1
+  @extend .FRAME
+
+  &Window
+    margin: auto
+    width: 100%
+    height: 50%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+.FRAME_2
+  @extend .FRAME
+
+  &Window
+    width: 100%
+    height: 100%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+.FRAME_3
+  @extend .FRAME
+
+  &MiniWindow
+    width: 100%
+    height: 50%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+  &Window
+    width: 100%
+    height: 100%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+  &Column
+    width: 100%
+    display: flex
+    flex-direction: column
+
+.FRAME_4
+  @extend .FRAME
+
+  &Window
+    width: 100%
+    height: 100%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+  &MiniWindow
+    position: absolute
+    bottom: 0
+    right: 0
+    width: 30%
+    height: 30%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+.FRAME_5
+  @extend .FRAME
+  flex-direction: column
+
+  &Window
+    margin: 0 auto
+    width: 80%
+    height: 80%
+    background: $gray-900-color
+    cursor: pointer
+
+    &Focused
+      @extend .FRAMEFocused
+
+  &Row
+    height: 20%
+    display: flex
+    justify-content: center
+
+  &MiniWindow
+    width: 20%
+    height: 100%
+    background: $gray-900-color
+    cursor: pointer

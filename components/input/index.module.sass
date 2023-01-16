@@ -1,0 +1,145 @@
+@import "/styles/colors"
+  
+.TextField
+  display: flex
+  flex-direction: column
+
+  &Label
+    margin-bottom: 4px
+    color: $gray-700-color
+    font-weight: 500
+    font-size: 14px
+    line-height: 20px
+
+  &Content
+    outline: none
+    padding: 9px 12px
+    border-radius: 6px
+    border: 1px solid $gray-300-color
+    background: $white-color
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05)
+    color: $gray-900-color
+    font-weight: 400
+    font-size: 16px
+    line-height: 24px
+
+    &Error
+      border-color: $red-color
+
+.ScalingTextField
+  &Label
+    margin-bottom: 11px
+    color: $gray-600-color
+    font-weight: 400
+    font-size: 14px
+    line-height: 20px
+
+  &Hidden
+    position: absolute
+    top: -16px
+    left: 0
+    opacity: 0
+    color: $gray-900-color
+    font-weight: 600
+    font-size: 20px
+    line-height: 24px
+
+  &Content
+    outline: none
+    margin-top: 6px
+    padding: 0
+    color: $gray-900-color
+    font-weight: 600
+    font-size: 20px
+    line-height: 24px
+    border: none
+    background: transparent
+
+    &Error
+      border-color: $red-color
+
+    &Border
+      margin-top: 8px
+      height: 2px
+      border-radius: 6px 
+      background: $primary-color
+      transition: 0.06s ease-in-out
+
+      &Error
+        background: $red-color
+
+.Select
+  padding: 16px 24px
+  width: 100%
+  border-radius: 8px
+  background: $white-color
+  color: $gray-700-color
+  font-weight: 500
+  font-size: 14px
+  line-height: 20px
+  display: flex
+
+  &::after
+    content: ""
+    width: 20px
+    height: 20px
+    background: url("/assets/arrow-down.svg") no-repeat center center /cover
+    transition: 0.1s ease-in-out
+
+  &Focused
+    &::after
+      content: ""
+      width: 20px
+      height: 20px
+      background: url("/assets/arrow-up.svg") no-repeat center center /cover
+      transition: 0.1s ease-in-out
+
+  &Wrapper
+    position: relative
+    display: flex
+    flex-direction: column
+    cursor: pointer
+    border-radius: 8px
+    border: 1px solid transparent
+
+    &Error
+      border-color: $red-color
+
+  &Dropdown
+    overflow: hidden
+    position: absolute
+    z-index: 999
+    top: calc(100% - 6px)
+    left: 0
+    width: 100%
+    perspective: 1000px
+    border-bottom-left-radius: 8px
+    border-bottom-right-radius: 8px
+    animation: growDown 300ms ease-in-out forwards
+    transform-origin: top center
+
+  &Value
+    margin-left: auto
+    margin-right: 20px
+
+.Option
+  padding: 9px 24px
+  padding-right: 64px
+  width: 100%
+  color: $black-color
+  background: $white-color
+  text-align: right
+  font-weight: 400
+  font-size: 14px
+  line-height: 20px
+
+  &:hover
+    background: $secondary-color
+
+@keyframes growDown
+  0% 
+    transform: scaleY(0)
+  80% 
+    transform: scaleY(1.1)
+  100% 
+    transform: scaleY(1)
