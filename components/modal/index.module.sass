@@ -11,6 +11,8 @@
   height: fit-content
   border-radius: 8px
   transition: all 0.3s ease-in-out
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18)
+  animation: scaleUp .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards
   display: flex
   flex-direction: column
   align-items: center
@@ -47,6 +49,14 @@
     display: flex
     align-items: center
     justify-content: center
+
+@keyframes scaleUp
+  0%
+    transform: scale(.8) translateY(1000px)
+    opacity:0
+  100%
+    transform: scale(1) translateY(0px)
+    opacity:1
 
 .RetranslationDialog
   width: 100%

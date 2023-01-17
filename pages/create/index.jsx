@@ -113,9 +113,9 @@ const Create = ({ accessToken }) => {
             style={{ marginTop: 22 }}
           />
           <FileUploader
-            name="photo"
+            name="images"
             label="Заглушка"
-            file={form.photo}
+            file={form.images[0]}
             accessToken={accessToken}
             onUpload={e => LobbyStore.handleChangeForm(e)}
             style={{ marginTop: 22 }}
@@ -205,6 +205,7 @@ const Create = ({ accessToken }) => {
         form={restreamForm}
         list={form.restreams}
         valid={restreamValid}
+        onEdit={e => LobbyStore.handleEditRestream(e)}
         onChange={e => LobbyStore.handleChangeRestreamForm(e)}
         onSubmit={handleRestream}
         onClose={() => setIsDialogOpen(false)}

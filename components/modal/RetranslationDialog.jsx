@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import styles from './index.module.sass'
 
@@ -22,7 +22,7 @@ const Icon = dynamic(() => import('components/icon').then(mod => mod.Icon), {
 const config = {
   0: {
     title: 'Ретрансляции',
-    Component: ({ list = [], onNext, onClose }) => {
+    Component: ({ list = [], onEdit, onNext, onClose }) => {
       return (
         <div className={styles.RetranslationDialog}>
           <div className={styles.RetranslationDialogHeader}>
@@ -37,7 +37,12 @@ const config = {
                 <span className={styles.RetranslationDialogContentText}>
                   {item.name.toCapitalCase()}
                 </span>
-                <span className={styles.RetranslationDialogContentLink}>Edit</span>
+                <span 
+                  className={styles.RetranslationDialogContentLink}
+                  onClick={() => onEdit(item)}
+                >
+                  Изменить
+                </span>
               </div>
             ))}
           </div>
@@ -116,7 +121,7 @@ const config = {
   },
 }
 
-const RetranslationDialog = ({ isOpen, form, list, valid, onChange, onSubmit, onClose }) => {
+const RetranslationDialog = ({ isOpen, form, list, valid, onChange, onEdit, onSubmit, onClose }) => {
   const [selectedContent, setSelectedContent] = useState(list.length ? 0 : 2)
 
   const handleGoBack = () => {
@@ -131,6 +136,11 @@ const RetranslationDialog = ({ isOpen, form, list, valid, onChange, onSubmit, on
     onChange({ name: 'name', value: name })
     handleNext(1)
   }
+
+  const handleEdit = (event) => {
+    onEdit(event)
+    handleNext()
+  }
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
       <DialogHeader onGoBack={handleGoBack} style={{ width: 480 }}>
@@ -141,6 +151,7 @@ const RetranslationDialog = ({ isOpen, form, list, valid, onChange, onSubmit, on
         list,
         valid,
         onChange,
+        onEdit: handleEdit,
         onNext: handleNext,
         onSelect: name => handleSelect(name),
         onSubmit: event => onSubmit({ event, callback: handleGoBack }),

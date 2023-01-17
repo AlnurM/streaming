@@ -33,10 +33,9 @@ const FileUploader = ({ label, name, file, accessToken, onUpload, style }) => {
           'Content-Type': 'multipart/form-data',
         },
       })
-      const { path } = response.data[0]
       onUpload({
         name,
-        value: path,
+        value: response.data,
       })
     } catch (e) {
       console.log(createError(e))
@@ -67,7 +66,7 @@ const FileUploader = ({ label, name, file, accessToken, onUpload, style }) => {
           )}
           <span className={styles.FileUploaderFormText}>PNG, JPG, JPEG up to 10MB</span>
         </div>
-        <div className={styles.FileUploaderItem} style={{ backgroundImage: `url(${file})` }} />
+        <div className={styles.FileUploaderItem} style={{ backgroundImage: `url(${file?.path})` }} />
       </div>
     </LabelWrapper>
   )

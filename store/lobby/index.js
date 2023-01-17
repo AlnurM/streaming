@@ -9,7 +9,7 @@ class LobbyStore {
     name: '',
     description: '',
     requirement: '',
-    photo: '',
+    images: [],
     resolution: '',
     fps: '',
     restreams: [],
@@ -31,7 +31,7 @@ class LobbyStore {
     isActive: false,
     moderatorId: '',
     name: '',
-    photo: '',
+    images: [],
     requirement: '',
     resolution: '',
     restreams: [],
@@ -62,12 +62,19 @@ class LobbyStore {
   }
 
   handleRestreamForm() {
-    this.form.restreams = [...this.form.restreams, this.restreamForm]
+    const cloned = [...this.form.restreams]
+    let selected = cloned.find(f => f.name === this.restreamForm.name)
+    selected = selected ? this.restreamForm : null
+    this.form.restreams = selected ? [...cloned] : [...cloned, this.restreamForm]
     this.restreamForm = {
       url: '',
       key: '',
       name: '',
     }
+  }
+
+  handleEditRestream(event) {
+    this.restreamForm = event
   }
 
   async handleSaveForm(accessToken) {
