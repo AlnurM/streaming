@@ -2,11 +2,10 @@ import { makeAutoObservable } from 'mobx'
 // import axios from 'axios'
 // import { createError } from 'lib/server'
 import * as streamFrame from 'store/stream/frame'
-import * as streamSource from 'store/stream/source'
 
 class StreamStore {
   frame = streamFrame.FRAME_1
-  source = streamSource.FRAME_1
+  source = {}
   focused = null
 
   constructor() {

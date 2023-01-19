@@ -9,12 +9,12 @@ const FlvPlayer = dynamic(() => import('/components/player/FlvPlayer'), {
   suspense: true,
 })
 
-const Frame5 = ({ focused, source, onSelect }) => {
+const Frame6 = ({ focused, source, onSelect }) => {
   return (
-    <div className={styles.FRAME_5}>
+    <div className={styles.FRAME_6}>
       <div
         id={frameSides.LEFT_SIDE}
-        className={clsx(styles.FRAME_5Window, {
+        className={clsx(styles.FRAME_6Window, {
           [styles.FRAME_5WindowFocused]: focused === frameSides.LEFT_SIDE,
         })}
         onClick={onSelect}
@@ -29,10 +29,10 @@ const Frame5 = ({ focused, source, onSelect }) => {
           />
         )}
       </div>
-      <div className={styles.FRAME_5Row}>
+      <div className={styles.FRAME_6Column}>
         {(source.track || []).map(src => (
           <div
-            className={clsx(styles.FRAME_5MiniWindow, {
+            className={clsx(styles.FRAME_6MiniWindow, {
               [styles.FRAME_5MiniWindowFocused]: focused === frameSides.BOTTOM_SIDE,
             })}
           >
@@ -50,4 +50,4 @@ const Frame5 = ({ focused, source, onSelect }) => {
   )
 }
 
-export default Frame5
+export default Frame6

@@ -1,7 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { useIsMount } from 'hooks'
 import clsx from 'clsx'
 import styles from './index.module.sass'
+
+// * COMPONENTS
+const FlvPlayer = dynamic(() => import('/components/player/FlvPlayer'), {
+  ssr: false,
+  suspense: true,
+})
 
 const RenderType = ({ type }) => {
   const config = {
@@ -83,14 +90,7 @@ const RenderButton = ({ name, value, onChange }) => {
   )
 }
 
-const MiniPlayer = ({
-  src,
-  type = 'video',
-  videoType,
-  name = 'Ricardo Cooper',
-  onSelect,
-  style,
-}) => {
+const MiniPlayer = ({ src, type = 'video', name = 'Ricardo Cooper', onSelect, style }) => {
   const isMount = useIsMount()
   const videoRef = useRef(null)
   const [playerState, setPlayerState] = useState({
@@ -112,15 +112,21 @@ const MiniPlayer = ({
     if (isMount) {
       return
     }
-    videoRef.current[playerState.isPlaying ? 'play' : 'pause']()
+    if (videoRef.current) {
+      videoRef.current[playerState.isPlaying ? 'play' : 'pause']()
+    }
   }, [playerState.isPlaying])
 
   useEffect(() => {
-    videoRef.current.volume = playerState.volume / 100
+    if (videoRef.current) {
+      videoRef.current.volume = playerState.volume / 100
+    }
   }, [playerState.volume])
 
   useEffect(() => {
-    videoRef.current.muted = playerState.isMuted
+    if (videoRef.current) {
+      videoRef.current.muted = playerState.isMuted
+    }
   }, [playerState.isMuted])
   return (
     <div className={styles.MiniPlayer} onClick={onSelect} style={style}>
@@ -129,10 +135,15 @@ const MiniPlayer = ({
         {name}
       </span>
       {type == 'video' && (
-        <video ref={videoRef} autoPlay preload="auto" className={styles.MiniPlayerVideo}>
-          <source src={src} type={videoType} />
-          Video not supported.
-        </video>
+        <FlvPlayer
+          videoRef={videoRef}
+          url={src}
+          showControls={false}
+          isLive={true}
+          enableStashBuffer={false}
+          isMuted={false}
+          style={{ marginTop: 16, maxHeight: 182 }}
+        />
       )}
       <div className={styles.MiniPlayerController}>
         <RenderVolume name="isMuted" value={playerState.isMuted} onChange={handleChange} />

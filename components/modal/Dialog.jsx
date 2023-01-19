@@ -7,7 +7,7 @@ import { PortalWrapper } from 'components/wrapper'
 
 const Dialog = ({ children, type = 'default', isOpen, onClose }) => {
   if (!isOpen) return null
-  const Children = children.length ? [...children] : [children]
+  const Children = !!children.length ? [...children] : [children]
   return (
     <PortalWrapper wrapperId="dialog-root">
       <div className={styles.DialogBackdrop} onClick={onClose} />

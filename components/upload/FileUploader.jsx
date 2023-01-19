@@ -66,7 +66,10 @@ const FileUploader = ({ label, name, file, accessToken, onUpload, style }) => {
           )}
           <span className={styles.FileUploaderFormText}>PNG, JPG, JPEG up to 10MB</span>
         </div>
-        <div className={styles.FileUploaderItem} style={{ backgroundImage: `url(${file?.path})` }} />
+        <div
+          className={styles.FileUploaderItem}
+          style={{ backgroundImage: `url(${file?.path})` }}
+        />
       </div>
     </LabelWrapper>
   )

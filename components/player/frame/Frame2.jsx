@@ -1,6 +1,13 @@
+import dynamic from 'next/dynamic'
 import * as frameSides from 'lib/frameSides'
 import clsx from 'clsx'
 import styles from './index.module.sass'
+
+// * COMPONENTS
+const FlvPlayer = dynamic(() => import('/components/player/FlvPlayer'), {
+  ssr: false,
+  suspense: true,
+})
 
 const Frame2 = ({ focused, source, onSelect }) => {
   return (
@@ -13,18 +20,13 @@ const Frame2 = ({ focused, source, onSelect }) => {
         onClick={onSelect}
       >
         {source[frameSides.LEFT_SIDE]?.link && (
-          <video
-            key={source[frameSides.LEFT_SIDE].link}
-            autoPlay
-            preload="auto"
-            className={styles.MainPlayerVideo}
-          >
-            <source
-              src={source[frameSides.LEFT_SIDE].link}
-              type={source[frameSides.LEFT_SIDE].type}
-            />
-            Video not supported.
-          </video>
+          <FlvPlayer
+            url={source[frameSides.LEFT_SIDE].link}
+            showControls={false}
+            isLive={true}
+            enableStashBuffer={false}
+            isMuted={false}
+          />
         )}
       </div>
       <div
@@ -35,18 +37,13 @@ const Frame2 = ({ focused, source, onSelect }) => {
         onClick={onSelect}
       >
         {source[frameSides.RIGHT_SIDE]?.link && (
-          <video
-            key={source[frameSides.RIGHT_SIDE].link}
-            autoPlay
-            preload="auto"
-            className={styles.MainPlayerVideo}
-          >
-            <source
-              src={source[frameSides.RIGHT_SIDE].link}
-              type={source[frameSides.RIGHT_SIDE].type}
-            />
-            Video not supported.
-          </video>
+          <FlvPlayer
+            url={source[frameSides.RIGHT_SIDE].link}
+            showControls={false}
+            isLive={true}
+            enableStashBuffer={false}
+            isMuted={false}
+          />
         )}
       </div>
     </div>

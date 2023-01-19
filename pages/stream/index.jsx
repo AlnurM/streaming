@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { observer } from 'mobx-react-lite'
+import { io } from 'socket.io-client'
 import LobbyStore from 'store/lobby'
 import StreamStore from 'store/stream'
 import { withAuth } from 'store/auth'
 import { useOutsideClick } from 'hooks'
+import { BASE_URL } from 'lib/server'
 import * as streamFrame from 'store/stream/frame'
 import clsx from 'clsx'
 import styles from './index.module.sass'
@@ -22,14 +24,16 @@ const Dialog = dynamic(() => import('components/modal').then(mod => mod.Dialog),
   suspense: true,
 })
 
-// * MOCK DATA
-const mock = [
-  { src: 'https://media.w3.org/2010/05/sintel/trailer.mp4', type: 'video', videoType: 'video/mp4' },
-  { src: 'https://media.w3.org/2010/05/bunny/movie_hd.ogv', type: 'video', videoType: 'video/ogg' },
-  { src: 'https://media.w3.org/2010/05/bunny/movie_hd.ogv', type: 'video', videoType: 'video/ogg' },
-]
-
-const Stream = () => {
+const Stream = ({ accessToken }) => {
+  const socket = io(BASE_URL + '/lobby', {
+    transports: ['websocket'],
+    auth: {
+      token: `Bearer ${accessToken}`,
+    },
+  })
+  const [list, setList] = useState([
+    // { streamUrl: 'http://207.154.245.9:8000/room123/.flv' },
+  ])
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { stream, inviteForm } = LobbyStore
   const { frame, source, focused } = StreamStore
@@ -41,13 +45,21 @@ const Stream = () => {
   }
 
   const handleSelectSource = data => {
-    const { src, videoType } = data
-    StreamStore.handleSelectFrameSource({ link: src, type: videoType })
+    const { streamUrl } = data
+    StreamStore.handleSelectFrameSource({ link: streamUrl })
   }
 
   const handleInvite = event => {
     event.preventDefault()
   }
+
+  useEffect(() => {
+    socket.on('stream-hls', streamData => {
+      console.log(streamData)
+      setList(prevState => [...prevState, streamData])
+    })
+    return () => socket.off('stream-hls')
+  }, [socket])
   return (
     <Wrapper title={stream.title || 'Название трансляции'}>
       <div className={styles.Stream} style={{ marginTop: 94 }}>
@@ -55,12 +67,10 @@ const Stream = () => {
           <Button fullWidth type="primary" onClick={() => setIsDialogOpen(true)}>
             Пригласить оператора
           </Button>
-          {mock.map((item, index) => (
+          {list.map((item, index) => (
             <MiniPlayer
               key={index}
-              src={item.src}
-              type={item.type}
-              videoType={item.videoType}
+              src={item.streamUrl}
               onSelect={() => handleSelectSource(item)}
               style={{ marginTop: 22 }}
             />
@@ -74,7 +84,10 @@ const Stream = () => {
             }
             focused={focused}
             currentFrame={frame}
-            source={{ ...source, track: mock.map(f => ({ link: f.src, type: f.videoType })) }}
+            source={{
+              ...source,
+              track: list.map(f => ({ link: f.streamUrl })),
+            }}
             onSelect={handleSelectFrame}
           />
           <div className={styles.StreamMainFrameContainer}>

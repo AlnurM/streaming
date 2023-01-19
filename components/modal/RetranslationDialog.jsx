@@ -37,7 +37,7 @@ const config = {
                 <span className={styles.RetranslationDialogContentText}>
                   {item.name.toCapitalCase()}
                 </span>
-                <span 
+                <span
                   className={styles.RetranslationDialogContentLink}
                   onClick={() => onEdit(item)}
                 >
@@ -121,7 +121,16 @@ const config = {
   },
 }
 
-const RetranslationDialog = ({ isOpen, form, list, valid, onChange, onEdit, onSubmit, onClose }) => {
+const RetranslationDialog = ({
+  isOpen,
+  form,
+  list,
+  valid,
+  onChange,
+  onEdit,
+  onSubmit,
+  onClose,
+}) => {
   const [selectedContent, setSelectedContent] = useState(list.length ? 0 : 2)
 
   const handleGoBack = () => {
@@ -137,7 +146,7 @@ const RetranslationDialog = ({ isOpen, form, list, valid, onChange, onEdit, onSu
     handleNext(1)
   }
 
-  const handleEdit = (event) => {
+  const handleEdit = event => {
     onEdit(event)
     handleNext()
   }
