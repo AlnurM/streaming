@@ -22,10 +22,7 @@ const Frame1 = ({ focused, source, onSelect }) => {
         {source[frameSides.LEFT_SIDE]?.link && (
           <FlvPlayer
             url={source[frameSides.LEFT_SIDE].link}
-            showControls={false}
-            isLive={true}
-            enableStashBuffer={false}
-            isMuted={false}
+            isLive={false}
           />
         )}
       </div>
@@ -39,10 +36,7 @@ const Frame1 = ({ focused, source, onSelect }) => {
         {source[frameSides.BOTTOM_SIDE]?.link && (
           <FlvPlayer
             url={source[frameSides.BOTTOM_SIDE].link}
-            showControls={false}
-            isLive={true}
-            enableStashBuffer={false}
-            isMuted={false}
+            isLive={false}
           />
         )}
       </div>

@@ -94,7 +94,7 @@ const MiniPlayer = ({ src, type = 'video', name = 'Ricardo Cooper', onSelect, st
   const isMount = useIsMount()
   const videoRef = useRef(null)
   const [playerState, setPlayerState] = useState({
-    isPlaying: true,
+    isPlaying: false,
     speed: 1,
     volume: 50,
     isMuted: false,
@@ -138,10 +138,8 @@ const MiniPlayer = ({ src, type = 'video', name = 'Ricardo Cooper', onSelect, st
         <FlvPlayer
           videoRef={videoRef}
           url={src}
-          showControls={false}
           isLive={true}
-          enableStashBuffer={false}
-          isMuted={false}
+          showControls={false}
           style={{ marginTop: 16, maxHeight: 182 }}
         />
       )}
