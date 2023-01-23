@@ -5,7 +5,6 @@ import * as streamFrame from 'store/stream/frame'
 
 class StreamStore {
   frame = streamFrame.FRAME_1
-  source = {}
   focused = null
 
   constructor() {
@@ -14,13 +13,6 @@ class StreamStore {
 
   handleSelectFrameType(newFrame) {
     this.frame = streamFrame[newFrame]
-  }
-
-  handleSelectFrameSource(source) {
-    if (!this.focused) {
-      return
-    }
-    this.source[this.focused] = source
   }
 
   handleFocus(id) {

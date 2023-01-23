@@ -93,6 +93,7 @@ const RenderButton = ({ name, value, onChange }) => {
 const MiniPlayer = ({ src, type = 'video', name = 'Ricardo Cooper', onSelect, style }) => {
   const isMount = useIsMount()
   const videoRef = useRef(null)
+  const [player, setPlayer] = useState(null)
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     speed: 1,
@@ -129,7 +130,11 @@ const MiniPlayer = ({ src, type = 'video', name = 'Ricardo Cooper', onSelect, st
     }
   }, [playerState.isMuted])
   return (
-    <div className={styles.MiniPlayer} onClick={onSelect} style={style}>
+    <div 
+      className={styles.MiniPlayer}
+      onClick={() => onSelect(player)} 
+      style={style}
+    >
       <span className={styles.MiniPlayerUser}>
         <RenderType type={type} />
         {name}
@@ -138,9 +143,10 @@ const MiniPlayer = ({ src, type = 'video', name = 'Ricardo Cooper', onSelect, st
         <FlvPlayer
           videoRef={videoRef}
           url={src}
-          isLive={true}
           showControls={false}
-          style={{ marginTop: 16, maxHeight: 182 }}
+          setPlayer={setPlayer}
+          onPlaying={(status) => handleChange({ name: 'isPlaying', value: status })}
+          style={{ marginTop: 16, maxHeight: 182, display: playerState.isPlaying ? 'block' : 'none' }}
         />
       )}
       <div className={styles.MiniPlayerController}>

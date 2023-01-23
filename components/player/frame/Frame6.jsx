@@ -1,13 +1,9 @@
-import dynamic from 'next/dynamic'
 import * as frameSides from 'lib/frameSides'
 import clsx from 'clsx'
 import styles from './index.module.sass'
 
 // * COMPONENTS
-const FlvPlayer = dynamic(() => import('/components/player/FlvPlayer'), {
-  ssr: false,
-  suspense: true,
-})
+import FlvRestranslation from 'components/player/FlvRetranslation'
 
 const Frame6 = ({ focused, source, onSelect }) => {
   return (
@@ -19,11 +15,8 @@ const Frame6 = ({ focused, source, onSelect }) => {
         })}
         onClick={onSelect}
       >
-        {source[frameSides.LEFT_SIDE]?.link && (
-          <FlvPlayer
-            url={source[frameSides.LEFT_SIDE].link}
-            isLive={false}
-          />
+        {source[frameSides.LEFT_SIDE] && (
+          <FlvRestranslation player={source[frameSides.LEFT_SIDE]} />
         )}
       </div>
       <div className={styles.FRAME_6Column}>
@@ -33,10 +26,7 @@ const Frame6 = ({ focused, source, onSelect }) => {
               [styles.FRAME_5MiniWindowFocused]: focused === frameSides.BOTTOM_SIDE,
             })}
           >
-            <FlvPlayer
-              url={src.link}
-              isLive={false}
-            />
+            <FlvRestranslation player={src} />
           </div>
         ))}
       </div>

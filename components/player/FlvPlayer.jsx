@@ -5,8 +5,9 @@ import { mergeRefs } from 'lib/utils'
 const FlvPlayer = ({
   videoRef,
   url,
-  isLive,
   showControls = true,
+  setPlayer = () => console.log(),
+  onPlaying = () => console.log(),
   style,
 }) => {
   const playerRef = useRef(null)
@@ -17,6 +18,7 @@ const FlvPlayer = ({
 
   const handlePlay = () => {
     playerRef.current.play()
+    onPlaying(true)
   }
 
   useEffect(() => {
@@ -27,30 +29,20 @@ const FlvPlayer = ({
       hasVideo: true,
       isLive: true,
       lowLatency: true,
+      buffered: 0.5,
       bufferTime: 0.5,
+      enableWorker: false,
       enableStashBuffer: false,
       stashInitialSize: 32,
-      autoCleanupMaxBackwardDuration: 5,
-    }
-    const liveConfig = {
-      ...config,
-      lowLatency: true,
-      bufferTime: 0.5,
-      enableStashBuffer: false,
-      stashInitialSize: 128,
-      // autoCleanupSourceBuffer: true,
-      autoCleanupMaxBackwardDuration: 15,
-      isLive: true,
+      autoCleanupMaxBackwardDuration: 1,
     }
     if (flvjs.isSupported()) {
-      const flvPlayer = flvjs.createPlayer(isLive ? liveConfig : config)
-
+      const flvPlayer = flvjs.createPlayer(config)
+      setPlayer(flvPlayer)
       flvjs.LoggingControl.enableError = false
       flvjs.LoggingControl.enableWarn = false
-
       flvPlayer.attachMediaElement(playerRef.current)
       flvPlayer.load()
-      // flvPlayer.play()
       flvPlayer.on('error', err => {
         handleError(err)
       })
@@ -61,9 +53,9 @@ const FlvPlayer = ({
       key={url}
       autoPlay
       onLoadedData={handlePlay}
+      onPause={() => onPlaying(false)}
       ref={videoRef ? mergeRefs(videoRef, playerRef) : playerRef}
       controls={showControls}
-      muted
       style={style}
     />
   )

@@ -8,6 +8,7 @@ import { withAuth } from 'store/auth'
 import { useOutsideClick } from 'hooks'
 import { BASE_URL } from 'lib/server'
 import * as streamFrame from 'store/stream/frame'
+import * as frameSides from 'lib/frameSides'
 import clsx from 'clsx'
 import styles from './index.module.sass'
 
@@ -31,12 +32,16 @@ const Stream = ({ accessToken }) => {
       token: `Bearer ${accessToken}`,
     },
   })
-  const [list, setList] = useState([
-    // { streamUrl: 'http://207.154.245.9:8000/room123/.flv' },
-  ])
+  const [list, setList] = useState([])
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [sourcePlayer, setSourcePlayer] = useState({
+    [frameSides.LEFT_SIDE]: null,
+    [frameSides.RIGHT_SIDE]: null,
+    [frameSides.TOP_SIDE]: null,
+    [frameSides.BOTTOM_SIDE]: null,
+  })
   const { stream, inviteForm } = LobbyStore
-  const { frame, source, focused } = StreamStore
+  const { frame, focused } = StreamStore
   const frameRef = useOutsideClick(() => StreamStore.handleFocus(null))
 
   const handleSelectFrame = event => {
@@ -44,9 +49,11 @@ const Stream = ({ accessToken }) => {
     StreamStore.handleFocus(id)
   }
 
-  const handleSelectSource = data => {
-    const { streamUrl } = data
-    StreamStore.handleSelectFrameSource({ link: streamUrl })
+  const handleSelectSource = player => {
+    setSourcePlayer(prevState => ({
+      ...prevState,
+      [focused]: player
+    }))
   }
 
   const handleInvite = event => {
@@ -55,7 +62,6 @@ const Stream = ({ accessToken }) => {
 
   useEffect(() => {
     socket.on('stream-hls', streamData => {
-      console.log(streamData)
       setList(prevState => [...prevState, streamData])
     })
     return () => socket.off('stream-hls')
@@ -71,7 +77,7 @@ const Stream = ({ accessToken }) => {
             <MiniPlayer
               key={index}
               src={item.streamUrl}
-              onSelect={() => handleSelectSource(item)}
+              onSelect={handleSelectSource}
               style={{ marginTop: 22 }}
             />
           ))}
@@ -84,10 +90,7 @@ const Stream = ({ accessToken }) => {
             }
             focused={focused}
             currentFrame={frame}
-            source={{
-              ...source,
-              track: list.map(f => ({ link: f.streamUrl })),
-            }}
+            source={sourcePlayer}
             onSelect={handleSelectFrame}
           />
           <div className={styles.StreamMainFrameContainer}>
